@@ -43,6 +43,12 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     stopAlarm();
     sendResponse({ ok: true });
   } else if (msg.type === "ping-now") {
+    // Reset alarm timer on manual ping if enabled
+    chrome.storage.local.get(["enabled", "intervalMinutes"], (data) => {
+      if (data.enabled) {
+        startAlarm(data.intervalMinutes ?? DEFAULT_INTERVAL_MINUTES);
+      }
+    });
     performPing();
     sendResponse({ ok: true });
   } else if (msg.type === "reset-chat") {
