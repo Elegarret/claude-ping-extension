@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0e0e10;
+      --surface: #18181b;
+      --surface2: #232328;
+      --border: #2e2e35;
+      --text: #e4e4e7;
+      --text-dim: #71717a;
+      --accent: #d4a053;
+      --accent-glow: #d4a05330;
+      --green: #4ade80;
+      --green-dim: #4ade8030;
+      --red: #f87171;
+      --red-dim: #f8717130;
+    }
+
+    body {
+      width: 340px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .header-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), #b8862d);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    .header h1 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .header p {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 1px;
+    }
+
+    /* Status Card */
+    .status-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .status-row:last-child { margin-bottom: 0; }
+    .status-label {
+      font-size: 11px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .status-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .dot-active {
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green-dim);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .dot-inactive {
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red-dim);
+    }
+    .dot-idle {
+      background: var(--text-dim);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Countdown */
+    .countdown {
+      text-align: center;
+      padding: 18px 0;
+      margin-bottom: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .countdown-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 2px;
+    }
+    .countdown-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Interval Setting */
+    .setting {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .setting-label {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .setting-input {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      width: 80px;
+      text-align: center;
+      outline: none;
+    }
+    .setting-input:focus {
+      border-color: var(--accent);
+    }
+
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      gap: 8px;
+    }
+    .btn {
+      flex: 1;
+      padding: 11px 0;
+      border: none;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #b8862d);
+      color: #0e0e10;
+      box-shadow: 0 2px 12px var(--accent-glow);
+    }
+    .btn-primary:hover { filter: brightness(1.1); }
+
+    .btn-danger {
+      background: var(--red-dim);
+      color: var(--red);
+      border: 1px solid #f8717140;
+    }
+    .btn-danger:hover { background: #f8717125; }
+
+    .btn-secondary {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: var(--border); }
+
+    /* Log */
+    .log-section {
+      margin-top: 14px;
+    }
+    .log-toggle {
+      font-size: 11px;
+      color: var(--text-dim);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 4px 0;
+    }
+    .log-toggle:hover { color: var(--text); }
+    .log-entries {
+      margin-top: 8px;
+      max-height: 100px;
+      overflow-y: auto;
+      display: none;
+    }
+    .log-entries.open { display: block; }
+    .log-entry {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      padding: 3px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .log-entry:last-child { border: none; }
+
+    /* Footer */
+    .footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="header-icon">⟳</div>
+    <div>
+      <h1>Claude Limit Resetter</h1>
+      <p>Auto-ping to anchor your rate window</p>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="status-card">
+    <div class="status-row">
+      <span class="status-label">Status</span>
+      <span class="status-value" id="statusText">
+        <span class="status-dot dot-idle" id="statusDot"></span>
+        <span id="statusLabel">Loading…</span>
+      </span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Last Ping</span>
+      <span class="status-value" id="lastPing">—</span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Result</span>
+      <span class="status-value" id="lastResult">—</span>
+    </div>
+  </div>
+
+  <!-- Countdown -->
+  <div class="countdown" id="countdownSection" style="display:none">
+    <div class="countdown-time" id="countdownTime">00:00:00</div>
+    <div class="countdown-label">until next ping</div>
+  </div>
+
+  <!-- Interval -->
+  <div class="setting">
+    <span class="setting-label">Interval</span>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <input type="number" class="setting-input" id="intervalInput" min="10" max="600" value="295" />
+      <span style="font-size:11px;color:var(--text-dim);">min</span>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="btn-group" id="btnGroup">
+    <button class="btn btn-primary" id="btnStart">Enable</button>
+    <button class="btn btn-secondary" id="btnPingNow">Ping Now</button>
+  </div>
+
+  <!-- Log -->
+  <div class="log-section">
+    <button class="log-toggle" id="logToggle">▸ Activity Log</button>
+    <div class="log-entries" id="logEntries"></div>
+  </div>
+
+  <div class="footer">
+    100% client-side · no data sent anywhere · <a href="https://github.com" target="_blank">source</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

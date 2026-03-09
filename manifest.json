@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Claude Limit Resetter",
+  "version": "1.0.0",
+  "description": "Automatically pings Claude every 4h 55m to keep your rate limit window anchored.",
+  "permissions": [
+    "alarms",
+    "scripting",
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://claude.ai/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
