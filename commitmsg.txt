@@ -1,0 +1,1 @@
+Initial commit: Claude Limit Resetter extension

@@ -32,6 +32,13 @@ logToggle.addEventListener("click", () => {
 // Poll state every second for countdown
 setInterval(updateCountdown, 1000);
 
+// Listen for storage changes to update UI immediately
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "local") {
+    loadState();
+  }
+});
+
 // ── State ─────────────────────────────────────────────────────
 
 function loadState() {
@@ -164,21 +171,21 @@ function startCountdown(lastPing, intervalMinutes) {
 }
 
 function updateCountdown() {
-  chrome.storage.local.get(
-    ["enabled", "lastPing", "intervalMinutes"],
-    (data) => {
-      if (!data.enabled) {
-        countdownSection.style.display = "none";
+  chrome.storage.local.get(["enabled"], (data) => {
+    if (!data.enabled) {
+      countdownSection.style.display = "none";
+      return;
+    }
+    countdownSection.style.display = "block";
+
+    // Get actual scheduled alarm time from Chrome
+    chrome.alarms.get("claude-ping", (alarm) => {
+      if (!alarm) {
+        countdownTime.textContent = "--:--:--";
         return;
       }
-      countdownSection.style.display = "block";
 
-      const interval = (data.intervalMinutes ?? 295) * 60 * 1000;
-
-      // If no ping yet, estimate from when alarm was created
-      const base = data.lastPing ? new Date(data.lastPing).getTime() : Date.now();
-      const nextPing = base + interval;
-      const remaining = Math.max(0, nextPing - Date.now());
+      const remaining = Math.max(0, alarm.scheduledTime - Date.now());
 
       const h = Math.floor(remaining / 3600000);
       const m = Math.floor((remaining % 3600000) / 60000);
@@ -190,8 +197,8 @@ function updateCountdown() {
         String(m).padStart(2, "0") +
         ":" +
         String(s).padStart(2, "0");
-    }
-  );
+    });
+  });
 }
 
 // ── Activity Log ──────────────────────────────────────────────

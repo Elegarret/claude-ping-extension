@@ -11,7 +11,7 @@ Claude's rate limits reset 5 hours after your **first message** in a window. If 
 1. Opens a background tab to `claude.ai/new` (uses your existing login session)
 2. Types "hi" and sends it
 3. Closes the tab
-4. Repeats every 4h 55m (configurable)
+4. Repeats every 5h 05m (configurable)
 
 **No API keys needed.** It uses your already-authenticated browser session.
 
@@ -26,7 +26,7 @@ Claude's rate limits reset 5 hours after your **first message** in a window. If 
 ## Usage
 
 1. Click the extension icon
-2. Adjust the interval if needed (default: 295 minutes = 4h 55m)
+2. Adjust the interval if needed (default: every 305 minutes = 5h 05m)
 3. Click **Enable**
 4. That's it — it runs in the background
 

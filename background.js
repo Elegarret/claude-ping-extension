@@ -24,8 +24,9 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-chrome.alarms.onAlarm.addListener((alarm) => {
+chrome.alarms.onAlarm.addListener(async (alarm) => {
   if (alarm.name === ALARM_NAME) {
+    await addLogEntry("Auto ping triggered");
     performPing();
   }
 });
