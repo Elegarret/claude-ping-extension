@@ -1,6 +1,6 @@
 # Claude Limit Resetter
 
-A Chrome extension that automatically pings Claude every 4h 55m to keep your rate limit window anchored — so it resets on a predictable schedule instead of drifting.
+A Chrome extension that automatically pings Claude every 5h 05m to keep your rate limit window anchored — so it resets on a predictable schedule instead of drifting.
 
 ## The Problem
 
